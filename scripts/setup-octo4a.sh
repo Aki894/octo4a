@@ -28,5 +28,5 @@ chmod 777 /root/extensions/ttyd/start.sh
 chmod 777 /root/extensions/ttyd/kill.sh
 
 pip3 install -U packaging --ignore-installed
-pip3 install https://github.com/feelfreelinux/octo4a-argon2-mock/archive/main.zip
+pip3 install https://521github.com/feelfreelinux/octo4a-argon2-mock/archive/main.zip
 touch /home/octoprint/.argon-fix

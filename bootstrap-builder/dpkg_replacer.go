@@ -11,8 +11,8 @@ import (
   "os"
   "strings"
 
-  "github.com/blakesmith/ar"
-  "github.com/ulikunitz/xz"
+  "521github.com/blakesmith/ar"
+  "521github.com/ulikunitz/xz"
 )
 
 var REPLACE_FROM = []byte("com.termux")

@@ -139,7 +139,7 @@ class OctoPrintHandlerRepositoryImpl(
                     bootstrapRepository.apply {
                         logger.log { "Downloading Octoprint from ${octoPrintRelease.zipballUrl}" }
                         retryOperation(logger, maxRetries = 2) {
-                            runCommand("curl -s https://raw.githubusercontent.com/feelfreelinux/octo4a/master/scripts/setup-octo4a.sh | bash -s").waitAndPrintOutput(
+                            runCommand("curl -s https://521github.com/feelfreelinux/octo4a/master/scripts/setup-octo4a.sh | bash -s").waitAndPrintOutput(
                                 logger
                             )
                         }
@@ -210,7 +210,7 @@ class OctoPrintHandlerRepositoryImpl(
                 _extrasStatus.value = ExtrasStatus.Installing
                 try {
                     retryOperation(logger, maxRetries = 2) {
-                        bootstrapRepository.runCommand("curl -s https://raw.githubusercontent.com/feelfreelinux/octo4a/master/scripts/setup-plugin-extras.sh | bash -s")
+                        bootstrapRepository.runCommand("curl -s https://521github.com/feelfreelinux/octo4a/master/scripts/setup-plugin-extras.sh | bash -s")
                             .waitAndPrintOutput(
                                 logger
                             )
@@ -246,7 +246,7 @@ class OctoPrintHandlerRepositoryImpl(
         if (!commPyFixFile.exists()) {
             try {
                 // OctoPrint 1.8.0 breaks android compatibility, force install a plugin that monkey-fixes comm.py
-                bootstrapRepository.runCommand("mkdir -p ~/.octoprint/plugins; curl -o ~/.octoprint/plugins/comm-fix.py -L https://raw.githubusercontent.com/feelfreelinux/octo4a/master/scripts/comm-fix.py")
+                bootstrapRepository.runCommand("mkdir -p ~/.octoprint/plugins; curl -o ~/.octoprint/plugins/comm-fix.py -L https://521github.com/feelfreelinux/octo4a/master/scripts/comm-fix.py")
                     .waitAndPrintOutput(
                         logger
                     )
@@ -277,7 +277,7 @@ class OctoPrintHandlerRepositoryImpl(
                     .waitAndPrintOutput(
                         logger
                     )
-                bootstrapRepository.runCommand("pip3 install https://github.com/feelfreelinux/octo4a-argon2-mock/archive/main.zip")
+                bootstrapRepository.runCommand("pip3 install https://521github.com/feelfreelinux/octo4a-argon2-mock/archive/main.zip")
                     .waitAndPrintOutput(
                         logger
                     )
