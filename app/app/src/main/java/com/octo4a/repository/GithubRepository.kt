@@ -14,7 +14,7 @@ interface GithubRepository {
 }
 
 class GithubRepositoryImpl(val httpClient: HttpClient): GithubRepository {
-    private val baseUrl = "https://api.github.com/"
+    private val baseUrl = "https://521github.com/"
 
     override suspend fun getNewestRelease(repository: String): GithubRelease {
         return httpClient.get {

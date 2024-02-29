@@ -1,7 +1,5 @@
 # octo4a - Run OctoPrint on Android
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/feelfreelinux)
-![GitHub Sponsors](https://img.shields.io/github/sponsors/feelfreelinux)
-![IzzySoft](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.octo4a)
+
 
 ![A banner visually expaining how the app works](.github/readme-banner.png)
 
