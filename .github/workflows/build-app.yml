@@ -4,6 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup build tool version variable
+        shell: bash
+        run: |
+          BUILD_TOOL_VERSION=$(ls /usr/local/lib/android/sdk/build-tools/ | tail -n 1)
+          echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
+          echo Last build tool version is: $BUILD_TOOL_VERSION
       - name: Checkout the code
         uses: actions/checkout@v2
       - name: Setup ndk
@@ -24,7 +30,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
-          BUILD_TOOLS_VERSION: "34.0.0"
+          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
