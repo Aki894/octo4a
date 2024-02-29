@@ -1,5 +1,6 @@
 name: Build app
-on: [pull_request, push]
+on: #[pull_request, push]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,35 +19,43 @@ jobs:
           ndk-version: r21d
       - name: Build the app
         run: |
-          ./gradlew assembleRelease
+          if [ ! -f "gradlew" ]; then gradle wrapper; fi
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace          
+          # ./gradlew assembleRelease
         working-directory: ./app
-      - uses: r0adkll/sign-android-release@v1
-        name: Sign app APK
-        id: sign_app
-        with:
-          releaseDirectory: app/app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-        env:
-          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
-      - name: Upload artifacts
+      - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: Signed app
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
-      - name: Get the version
-        if: startsWith(github.ref, 'refs/tags/')
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
-      - name: Move and name release
-        if: startsWith(github.ref, 'refs/tags/')
-        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} octo4a-${{steps.get_version.outputs.VERSION}}.apk
-      - name: Create github release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: octo4a-${{steps.get_version.outputs.VERSION}}.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: my-build-apk
+          path: ./**/*.apk
+      # - uses: r0adkll/sign-android-release@v1
+      #   name: Sign app APK
+      #   id: sign_app
+      #   with:
+      #     releaseDirectory: app/app/build/outputs/apk/release
+      #     signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+      #     alias: ${{ secrets.ALIAS }}
+      #     keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+      #     keyPassword: ${{ secrets.KEY_PASSWORD }}
+      #   env:
+      #     BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: Signed app
+      #     path: ${{steps.sign_app.outputs.signedReleaseFile}}
+      # - name: Get the version
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   id: get_version
+      #   run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+      # - name: Move and name release
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   run: mv ${{steps.sign_app.outputs.signedReleaseFile}} octo4a-${{steps.get_version.outputs.VERSION}}.apk
+      # - name: Create github release
+      #   uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: octo4a-${{steps.get_version.outputs.VERSION}}.apk
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
